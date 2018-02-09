@@ -26,7 +26,7 @@ typedef struct LinkedList {
 } LinkedList;
 
 // Create a new process struct 
-process *createProcess(name, arrival, burst)
+process *createProcess(char* name, int arrival, int burst)
 {
 	process *new_process = malloc(sizeof(process));
 	
@@ -36,7 +36,8 @@ process *createProcess(name, arrival, burst)
 		exit(1);
 	}
 	
-	new_process->process_name = name;
+	strcpy(new_process->process_name, name);
+	// new_process->process_name = name;
 	new_process->arrival_time = arrival;
 	new_process->burst_length = burst;
 	
@@ -49,6 +50,7 @@ LinkedList *createList(void)
 	LinkedList *list = malloc(sizeof(LinkedList));
 	list->head = NULL;
 	list->tail = NULL;
+	return list;
 }
 
 // Free a linked list
@@ -58,12 +60,12 @@ LinkedList *freeList(LinkedList *list)
 	
 	// If it is already empty
 	if (list == NULL)
-		return;
+		return NULL;
 		
 	while (list->head != NULL)
 	{
 		temp = list->head->next;
-		free(list->head)
+		free(list->head);
 		list->head = temp;
 	}
 	
@@ -87,7 +89,8 @@ void addProcess(LinkedList *list, process* new_process)
 	list->tail = list->tail->next;
 }
 
-int main()
-{
-
+int main(void)
+{	
+	// fflush(stdin);
+	return 0;
 }
