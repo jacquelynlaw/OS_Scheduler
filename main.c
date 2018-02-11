@@ -1,44 +1,15 @@
-// Lorraine Yerger
+// OS Group 48: Lorraine Yerger, Jackie Law, Brandon Cuevas
 // PA 1
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-#define BUFFSIZE 300
-#define NAMESIZE 50
-
-typedef struct schedparams {
-	int processCount;
-	int runTime;
-	char* schedAlg;
-	int quantum;
-
-} schedparams;
-
-typedef struct process {
-	char process_name[BUFFSIZE];
-	int arrival_time;
-	int burst_length;
-	struct process* next;
-} process;
-
-process *createProcess(char* name, int arrival, int burst);
-int readProcessCount(FILE *fp);
-int readRunTime(FILE *fp);
-char* readAlgType(FILE *fp);
-int readQuantum (FILE *fp, char* schedAlg);
-process* readProcess(FILE *fp);
-void printProcess(process *p);
+#include "header.h"
 
 int main(void)
 {    
     
     // File name to read from
-    FILE *fp = fopen("set2_process.in", "r");
+    FILE *fp = fopen("set4_process.in", "r");
     if(fp==NULL)
-    	printf("ERROR\n");
-    
+    	printf("ERROR\n"); 
     
     // Use struct to capture input fields
     schedparams *parameters = malloc(sizeof(schedparams));
@@ -57,21 +28,21 @@ int main(void)
 		printProcess(processesArray[i]);		
 	}
 	
-	// TO COMPLETE - Run proper algorithm on array of processes
+	// Run proper algorithm on array of processes (each contained in own .c file)
 	if(strcmp(parameters->schedAlg, "fcfs")==0)
 	{
 		// RUN ALGORITHM
-		printf("Running FCFS...\n");
+		fcfs(processesArray);
 	}
 	else if(strcmp(parameters->schedAlg, "sjf")==0)
 	{
 		// RUN ALGORITHM
-		printf("Running SJF...\n");
+		sjf(processesArray);
 	}
 	else if(strcmp(parameters->schedAlg, "rr")==0)
 	{
 		// RUN ALGORITHM
-		printf("Running RR...\n");
+		rr(processesArray);
 	}
 	else
 		printf("Error: No algorithm recognized to run.\n");
@@ -80,6 +51,7 @@ int main(void)
     return 0;
 }
 
+// For debugging purposes
 void printProcess(process *p)
 {
 	printf("Process %s: arrival = %d, burst = %d\n", p->process_name, p->arrival_time, 
@@ -87,6 +59,7 @@ void printProcess(process *p)
 	return;
 }
 
+// Read line containing process count from input, parse and return the integer value
 int readProcessCount(FILE *fp)
 {
 	// Delimiter chars to tokenize input
@@ -109,6 +82,7 @@ int readProcessCount(FILE *fp)
     return processCount;
 }
 
+// Read line containing run time from input, parse and return the integer value
 int readRunTime(FILE *fp)
 {
 	// Delimiter chars to tokenize input
@@ -129,6 +103,7 @@ int readRunTime(FILE *fp)
     return runTime;
 }
 
+// Read line containing Alg Type from input, parse and return a string
 char* readAlgType(FILE *fp)
 {
     const char delim[4] = " \n\t";	
@@ -150,6 +125,7 @@ char* readAlgType(FILE *fp)
 	return schedAlg;
 }
 
+// If RR, read line containing quantum from input, parse and return the integer value
 int readQuantum (FILE *fp, char* schedAlg)
 {
 	const char delim[4] = " \n\t";	
@@ -169,6 +145,8 @@ int readQuantum (FILE *fp, char* schedAlg)
 	return quantum;
 }
 
+// Read one line containing process name and description, parse data values
+// Return a process struct with filled parameters
 process* readProcess(FILE *fp)
 {
 	// Delimiter chars to tokenize input
