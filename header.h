@@ -24,7 +24,7 @@ typedef struct process {
 	char process_name[BUFFSIZE];
 	int arrival_time;
 	int burst_length;
-	
+	int process_state;
 } process;
 
 // Function declarations: main.c
