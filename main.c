@@ -28,21 +28,24 @@ int main(void)
 		printProcess(processesArray[i]);		
 	}
 	
+	// Sort array of processes by arrival time
+	processesArray = sortProcesses(processesArray, parameters);
+	
 	// Run proper algorithm on array of processes (each contained in own .c file)
 	if(strcmp(parameters->schedAlg, "fcfs")==0)
 	{
 		// RUN ALGORITHM
-		fcfs(processesArray);
+		fcfs(processesArray, parameters);
 	}
 	else if(strcmp(parameters->schedAlg, "sjf")==0)
 	{
 		// RUN ALGORITHM
-		sjf(processesArray);
+		sjf(processesArray, parameters);
 	}
 	else if(strcmp(parameters->schedAlg, "rr")==0)
 	{
 		// RUN ALGORITHM
-		rr(processesArray);
+		rr(processesArray, parameters);
 	}
 	else
 		printf("Error: No algorithm recognized to run.\n");
@@ -198,6 +201,29 @@ process *createProcess(char* name, int arrival, int burst)
 	strcpy(new_process->process_name, name);
 	new_process->arrival_time = arrival;
 	new_process->burst_length = burst;
+	new_process->process_state = WAITING;
 	
 	return new_process;
+}
+
+void swap (process *a, process *b)
+{
+	process temp = *a;
+	*a = *b;
+	*b = temp;
+}
+
+process **sortProcesses(process **processesArray, schedparams *parameters)
+{
+	int i, j;
+	for (i = 0; i < (parameters->processCount) - 1; i++)
+	{
+		for (j = 0; j < (parameters->processCount - i) - 1; j++)
+		{
+			if (processesArray[j]->arrival_time > processesArray[j+1]->arrival_time)
+				swap(processesArray[j], processesArray[j+1]);
+		}
+	}
+	
+	return processesArray;
 }
