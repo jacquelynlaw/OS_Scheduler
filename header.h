@@ -8,8 +8,8 @@
 #define BUFFSIZE 300
 #define NAMESIZE 50
 // For the state of the process
-#define WAITING = 0
-#define READY = 1
+#define WAITING 0
+#define READY 1
 
 // Struct declarations
 typedef struct schedparams {
@@ -35,10 +35,11 @@ char* readAlgType(FILE *fp);
 int readQuantum (FILE *fp, char* schedAlg);
 process* readProcess(FILE *fp);
 void printProcess(process *p);
+process **sortProcesses(process **processesArray, schedparams *parameters);
 
 // Function declarations: SJF.c
-void fcfs(process **processesArray);
-void sjf(process **processesArray);
-void rr(process **processesArray);
+void fcfs(process **processesArray, schedparams *parameters);
+void sjf(process **processesArray, schedparams *parameters);
+void rr(process **processesArray, schedparams *parameters);
 
 #endif
