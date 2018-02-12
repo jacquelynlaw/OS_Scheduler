@@ -7,6 +7,9 @@
 
 #define BUFFSIZE 300
 #define NAMESIZE 50
+// For the state of the process
+#define WAITING = 0
+#define READY = 1
 
 // Struct declarations
 typedef struct schedparams {
@@ -21,7 +24,7 @@ typedef struct process {
 	char process_name[BUFFSIZE];
 	int arrival_time;
 	int burst_length;
-	struct process* next;
+	
 } process;
 
 // Function declarations: main.c
