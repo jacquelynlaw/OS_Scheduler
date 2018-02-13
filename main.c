@@ -201,7 +201,7 @@ process *createProcess(char* name, int arrival, int burst)
 	strcpy(new_process->process_name, name);
 	new_process->arrival_time = arrival;
 	new_process->burst_length = burst;
-	new_process->process_state = WAITING;
+	new_process->process_state = NOTARRIVED;
 	
 	return new_process;
 }
