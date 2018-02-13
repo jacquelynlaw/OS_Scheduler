@@ -2,7 +2,7 @@
 
 void fcfs(process **processesArray, schedparams *parameters)
 {
-	printf("Running FCFS from fcfs.c...!\n\n");
+	printf("Running FCFS from fcfs.c...\n\n");
 	
 	FILE *fp = fopen("processes.out", "w");
 	if(fp==NULL)
@@ -29,7 +29,6 @@ void fcfs(process **processesArray, schedparams *parameters)
 				// Write to Output
 				fprintf(fp, "Time %d: %s arrived\n", time, processesArray[indexOfNextArriving]->process_name);
 				processesArray[indexOfNextArriving]->process_state = READY;
-				printf("here 1\n");
 				indexOfNextArriving++;
 
 				
@@ -49,15 +48,16 @@ void fcfs(process **processesArray, schedparams *parameters)
 				// Print finished message, set state to READY, increase indexOfProcessToRun
 				fprintf(fp, "Time %d: %s finished\n", time, processesArray[indexOfProcessToRun]->process_name);
 				processesArray[indexOfProcessToRun]->process_state = READY;
+				
+				// Capture the time it finished
+				processesArray[indexOfProcessToRun]->end_time = time;
+
 				indexOfProcessToRun++;
 			}
 			
 			// Or, is process still running? If so, do nothing.
 			else
 				;
-				// fprintf(fp, "Time %d - process %s still running, run time=%d\n", time, 
-// 								processesArray[indexOfProcessToRun]->process_name, 
-// 								time-processStartTime);
 		}
 			;
 		// Else, if we need to start a new process, has p[indexOfProcessToRun] arrived?
@@ -68,14 +68,27 @@ void fcfs(process **processesArray, schedparams *parameters)
 			processStartTime=time;
 			fprintf(fp, "Time %d: %s selected (burst %d)\n", time, processesArray[indexOfProcessToRun]->process_name,
 							processesArray[indexOfProcessToRun]->burst_length);
+			// Capture how long that process was waiting before running
+			processesArray[indexOfProcessToRun]->wait_time = time - processesArray[indexOfProcessToRun]->arrival_time;
 		}
 		
 	}
 	// Check if last process running finished at end of runTime
 	if( (time-processStartTime) == (processesArray[indexOfProcessToRun]->burst_length) )
+	{
 		fprintf(fp, "Time %d: %s finished\n", time, processesArray[indexOfProcessToRun]->process_name);
+		processesArray[indexOfProcessToRun]->end_time = time;
+	}
 	
 	fprintf(fp, "Finished at time %d\n\n", time);
+	
+	// Print wait times and turnaround times
+	for(int i=0; i<parameters->processCount; i++)
+	{
+		fprintf(fp, "%s wait %d turnaround %d\n", processesArray[i]->process_name, 
+					processesArray[i]->wait_time, 
+					processesArray[i]->end_time - processesArray[i]->arrival_time);
+	}
 	
 	return;
 }
