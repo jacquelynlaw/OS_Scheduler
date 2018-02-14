@@ -10,6 +10,7 @@
 // For the state of the process
 #define WAITING 0
 #define READY 1
+#define RUNNING 2
 
 // Struct declarations
 typedef struct schedparams {
