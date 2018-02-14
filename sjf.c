@@ -17,7 +17,7 @@ void sjf(process **processesArray, schedparams *parameters)
 {
 	int processCount = parameters->processCount;
 	int runTime = parameters->runTime;
-	int i, t, nextArrivingProcess = 0, currentProcess = PROCESS_IDLE;
+	int i, t, nextArrivingProcess = 0, currentProcess = PROCESS_IDLE, previousProcess;
 	int *waitTimes, *turnaroundTimes;
 
 	FILE *ofp = fopen(OUTPUT_FILE, "w");
@@ -28,7 +28,7 @@ void sjf(process **processesArray, schedparams *parameters)
 
 	// Print output file headings
 	fprintf(ofp, "%d processes\n", processCount);
-	fprintf(ofp, "Using Shortest Job First\n\n");
+	fprintf(ofp, "Using Shortest Job First (Pre)\n\n");
 
 	// Increment through full run time
 	for (t = 0; t < runTime; t++)
@@ -64,11 +64,15 @@ void sjf(process **processesArray, schedparams *parameters)
 				nextArrivingProcess++;
 			}
 
-			// Select next process to run
+			// Select next process to run, declare newly selected process on change
+			previousProcess = currentProcess;
 			currentProcess = selectProcess(processesArray, processCount);
 			if (currentProcess != PROCESS_IDLE)
 			{
-				fprintf(ofp, "Time %d: %s selected (burst %d)\n", t, processesArray[currentProcess]->process_name, processesArray[currentProcess]->burst_length);
+				if (previousProcess != currentProcess)
+				{
+					fprintf(ofp, "Time %d: %s selected (burst %d)\n", t, processesArray[currentProcess]->process_name, processesArray[currentProcess]->burst_length);
+				}
 			}
 		}
 
@@ -83,7 +87,7 @@ void sjf(process **processesArray, schedparams *parameters)
 			}
 			else
 			{
-				fprintf(ofp, "Time %d: Idle\n", t);
+				fprintf(ofp, "Time %d: IDLE\n", t);
 			}
 		}
 
@@ -94,11 +98,7 @@ void sjf(process **processesArray, schedparams *parameters)
 
 	for (i = 0; i < processCount; i++)
 	{
-		fprintf(ofp, "%s wait %d turnaround %d", processesArray[i]->process_name, waitTimes[i], turnaroundTimes[i]);
-		if (i < (processCount - 1))
-		{
-			fprintf(ofp, "\n");
-		}
+		fprintf(ofp, "%s wait %d turnaround %d\n", processesArray[i]->process_name, waitTimes[i], turnaroundTimes[i]);
 	}
 
 	free(waitTimes);
