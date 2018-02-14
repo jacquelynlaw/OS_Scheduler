@@ -8,7 +8,7 @@
 #define BUFFSIZE 300
 #define NAMESIZE 50
 // For the state of the process
-#define NOTARRIVED 0
+#define WAITING 0
 #define READY 1
 #define RUNNING 2
 
