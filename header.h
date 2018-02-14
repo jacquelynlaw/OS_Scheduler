@@ -26,6 +26,8 @@ typedef struct process {
 	int arrival_time;
 	int burst_length;
 	int process_state;
+	int wait_time;
+	int end_time;
 } process;
 
 // Function declarations: main.c

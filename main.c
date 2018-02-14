@@ -31,11 +31,13 @@ int main(void)
 	// Sort array of processes by arrival time
 	processesArray = sortProcesses(processesArray, parameters);
 	
+	/*
 	printf("\nSorted Processes:\n");
 	for(int i=0; i<parameters->processCount; i++)
 	{
 		printProcess(processesArray[i]);		
 	}
+	*/
 	
 	// Run proper algorithm on array of processes (each contained in own .c file)
 	if(strcmp(parameters->schedAlg, "fcfs")==0)
