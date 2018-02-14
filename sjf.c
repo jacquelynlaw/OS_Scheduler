@@ -17,7 +17,7 @@ void sjf(process **processesArray, schedparams *parameters)
 {
 	int processCount = parameters->processCount;
 	int runTime = parameters->runTime;
-	int i, t, nextArrivingProcess = 0, currentProcess = PROCESS_IDLE;
+	int i, t, nextArrivingProcess = 0, currentProcess = PROCESS_IDLE, previousProcess;
 	int *waitTimes, *turnaroundTimes;
 
 	FILE *ofp = fopen(OUTPUT_FILE, "w");
@@ -64,11 +64,15 @@ void sjf(process **processesArray, schedparams *parameters)
 				nextArrivingProcess++;
 			}
 
-			// Select next process to run
+			// Select next process to run, declare newly selected process on change
+			previousProcess = currentProcess;
 			currentProcess = selectProcess(processesArray, processCount);
 			if (currentProcess != PROCESS_IDLE)
 			{
-				fprintf(ofp, "Time %d: %s selected (burst %d)\n", t, processesArray[currentProcess]->process_name, processesArray[currentProcess]->burst_length);
+				if (previousProcess != currentProcess)
+				{
+					fprintf(ofp, "Time %d: %s selected (burst %d)\n", t, processesArray[currentProcess]->process_name, processesArray[currentProcess]->burst_length);
+				}
 			}
 		}
 
