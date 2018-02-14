@@ -7,7 +7,7 @@ int main(void)
 {
 
     // File name to read from
-    FILE *fp = fopen("set3_process.in", "r");
+    FILE *fp = fopen("set4_process.in", "r");
     if(fp==NULL)
     	printf("ERROR\n");
 
@@ -30,7 +30,7 @@ int main(void)
 
 	// Sort array of processes by arrival time
 	processesArray = sortProcesses(processesArray, parameters);
-  
+
 	// Run proper algorithm on array of processes (each contained in own .c file)
 	if(strcmp(parameters->schedAlg, "fcfs")==0)
 	{
