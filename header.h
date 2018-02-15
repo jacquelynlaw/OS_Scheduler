@@ -28,6 +28,7 @@ typedef struct process {
 	int process_state;
 	int wait_time;
 	int end_time;
+	int checkin_time; // for RR purposes
 } process;
 
 // Function declarations: main.c
