@@ -1,0 +1,9 @@
+processcount 4 # jafd
+runfor 41 # jade
+use rr #djfk
+quantum 5 # daft
+process name P1 arrival 0 burst 20
+process name P4 arrival 10 burst 6
+process name P2 arrival 1 burst 3
+process name P3 arrival 2 burst 1
+end
