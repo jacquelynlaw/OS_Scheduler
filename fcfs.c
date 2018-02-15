@@ -2,12 +2,10 @@
 
 void fcfs(process **processesArray, schedparams *parameters)
 {
-	printf("Running FCFS from fcfs.c...\n\n");
-	
 	FILE *fp = fopen("processes.out", "w");
 	if(fp==NULL)
 		printf("Error: file not found.\n");
-	
+		
 	fprintf(fp, "%d Processes\n", parameters->processCount);
 	fprintf(fp, "Using First Come First Served\n\n");
 	
@@ -18,7 +16,7 @@ void fcfs(process **processesArray, schedparams *parameters)
 	int processStartTime = 0;
 	
 	for(time=0; time<parameters->runTime; time++)
-	{
+	{		
 		// --- CHECK FOR ARRIVING PROCESSES ---
 		// Are there processes left to arrive?
 		if(!allProcessesArrived)
@@ -41,7 +39,7 @@ void fcfs(process **processesArray, schedparams *parameters)
 		// --- CHECK WHICH PROCESS TO RUN ---
 		// Are we currently running a process?
 		if(processesArray[indexOfProcessToRun]->process_state == RUNNING)
-		{
+		{			
 			// Did the process just finish?
 			if( (time-processStartTime) == (processesArray[indexOfProcessToRun]->burst_length) )
 			{
@@ -52,14 +50,24 @@ void fcfs(process **processesArray, schedparams *parameters)
 				// Capture the time it finished
 				processesArray[indexOfProcessToRun]->end_time = time;
 
-				indexOfProcessToRun++;
+				// Was this the last process we had to run? 
+				if(indexOfProcessToRun==(parameters->processCount-1))
+				{
+					time = parameters->runTime;
+					break;
+				}
+				
+				// If this wasn't the last process, increment index
+				else
+					indexOfProcessToRun++;
+
 			}
 			
 			// Or, is process still running? If so, do nothing.
 			else
 				;
 		}
-			;
+
 		// Else, if we need to start a new process, has p[indexOfProcessToRun] arrived?
 		if(processesArray[indexOfProcessToRun]->process_state == READY)
 		{

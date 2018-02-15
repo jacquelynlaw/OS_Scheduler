@@ -8,8 +8,9 @@ int main(void)
 
     // File name to read from
     FILE *fp = fopen("set3_process.in", "r");
+
     if(fp==NULL)
-    	printf("ERROR\n");
+    	printf("ERROR: File pointer is null\n");
 
     // Use struct to capture input fields
     schedparams *parameters = malloc(sizeof(schedparams));
