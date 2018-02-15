@@ -26,7 +26,7 @@ int main(void)
 	for(int i=0; i<parameters->processCount; i++)
 	{
 		processesArray[i] = readProcess(fp);
-		printProcess(processesArray[i]);
+		//printProcess(processesArray[i]);
 	}
 
 	// Sort array of processes by arrival time
@@ -82,7 +82,6 @@ int readProcessCount(FILE *fp)
     	processCount = atoi(token);
     }
 
-    printf("Process count = %d\n", processCount);
     return processCount;
 }
 
@@ -103,7 +102,6 @@ int readRunTime(FILE *fp)
     	token = strtok(NULL, delim);
     	runTime = atoi(token);
     }
-    printf("Run time = %d\n", runTime);
     return runTime;
 }
 
@@ -124,7 +122,6 @@ char* readAlgType(FILE *fp)
     	token = strtok(NULL, delim);
     	strcpy(schedAlg, token);
     }
-	printf("Scheduling Alg = %s\n", schedAlg);
 
 	return schedAlg;
 }
@@ -145,7 +142,6 @@ int readQuantum (FILE *fp, char* schedAlg)
 		token = strtok(NULL, delim);
 		quantum = atoi(token);
 	}
-	printf("Quantum = %d\n", quantum);
 	return quantum;
 }
 
