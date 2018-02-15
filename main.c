@@ -1,5 +1,5 @@
 // OS Group 48: Lorraine Yerger, Jackie Law, Brandon Cuevas
-// PA 1
+// Programming Assignment 1
 
 #include "header.h"
 
@@ -7,7 +7,7 @@ int main(void)
 {    
     
     // File name to read from
-    FILE *fp = fopen("set1_process.in", "r");
+    FILE *fp = fopen("processes.in", "r");
 
     if(fp==NULL)
     	printf("ERROR: File pointer is null\n");
