@@ -7,7 +7,7 @@ int main(void)
 {    
     
     // File name to read from
-    FILE *fp = fopen("set1_process.in", "r");
+    FILE *fp = fopen("test2.in", "r");
     if(fp==NULL)
     	printf("ERROR\n"); 
     
